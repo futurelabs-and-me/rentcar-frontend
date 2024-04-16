@@ -1,0 +1,32 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+input[type="date"]:not(:focus):in-range::-webkit-datetime-edit-year-field,
+input[type="date"]:not(:focus):in-range::-webkit-datetime-edit-month-field,
+input[type="date"]:not(:focus):in-range::-webkit-datetime-edit-day-field,
+input[type="date"]:not(:focus):in-range::-webkit-datetime-edit-text {
+  color: transparent;
+}
+
+input::-webkit-date-and-time-value {
+  text-align: left;
+  @apply text-gray-900;
+}
+
+input[type="date"]:not(:focus):empty:after {
+  position: absolute;
+  @apply text-gray-400;
+  content: attr(placeholder);
+}
+
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
