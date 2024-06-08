@@ -4,11 +4,15 @@ import Imgandname from "./components/imgandname";
 import axios from "axios";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/outline";
 import Addcars from "./components/addcars";
+import Deletecars from "./components/deletecars";
+import { useSearchParams } from "react-router-dom";
 
 export default function Cars() {
   const [cars, setCars] = useState({});
+  let [searchParams, setSearchParams] = useSearchParams();
 
   const addcarboxRef = createRef();
+  const deletecarboxRef = createRef();
 
   useEffect(() => {
     document.title = "Cars";
@@ -22,24 +26,21 @@ export default function Cars() {
       });
   }, []);
 
-  function deleteCar(id) {
-    /*
-    axios
-      .delete(`http://localhost:5000/admin/cars/${id}`, {
-        withCredentials: true,
-      })
-      .then((res) => {
-        if (res.data.message === "Successful") {
-          window.location.reload();
-        } else {
-          alert("Something went wrong please try to delete again");
-        }
-      })
-      .catch((err) => {
-        throw err;
-      });
-      */
-  }
+  useEffect(() => {
+    if (deletecarboxRef?.current) {
+      if (
+        searchParams.get("del") === "null" ||
+        searchParams.get("del") === ""
+      ) {
+        deletecarboxRef?.current.close();
+      } else if (
+        searchParams.get("del") &&
+        searchParams.get("del").length > 0
+      ) {
+        deletecarboxRef?.current.showModal();
+      }
+    }
+  }, [searchParams.get("del")]);
 
   return (
     <>
@@ -118,7 +119,12 @@ export default function Cars() {
                       </Table.Button>
                       <Table.Button
                         className="bg-red-500 hover:bg-red-600 text-red-100"
-                        onClick={deleteCar}
+                        onClick={() => {
+                          setSearchParams((prev) => {
+                            prev.set("del", car._id);
+                            return prev;
+                          });
+                        }}
                       >
                         <TrashIcon className="w-4 h-4 mr-1" />
                         Delete
@@ -135,6 +141,7 @@ export default function Cars() {
           </Table.Body>
         </Table>
         <Addcars ref={addcarboxRef} />
+        <Deletecars ref={deletecarboxRef} />
       </div>
     </>
   );

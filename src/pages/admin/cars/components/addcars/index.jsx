@@ -59,6 +59,21 @@ const Addcars = forwardRef((props, ref) => {
     }
   }
 
+  function onSubmit(e) {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = {
+      name: formData.get("car_name"),
+      amount: formData.get("Price"),
+      mileage: formData.get("mileage"),
+      size: formData.get("Size"),
+      fueltype: fueltype,
+      location: location,
+      images: fileRes,
+    };
+    console.log(data);
+  }
+
   return (
     <dialog
       onClick={(event) => {
@@ -119,7 +134,10 @@ const Addcars = forwardRef((props, ref) => {
           }}
         />
 
-        <form className="mt-3 grid grid-cols-6 gap-y-2 gap-6">
+        <form
+          onSubmit={onSubmit}
+          className="mt-3 grid grid-cols-6 gap-y-2 gap-6"
+        >
           <div className="col-span-6 sm:col-span-6">
             <label
               htmlFor="CarName"
@@ -241,7 +259,7 @@ const Addcars = forwardRef((props, ref) => {
             </label>
 
             <input
-              type="text"
+              type="number"
               id="Price"
               name="Price"
               className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
@@ -253,18 +271,84 @@ const Addcars = forwardRef((props, ref) => {
               htmlFor="Size"
               className="block text-sm font-medium text-gray-700"
             >
-              Password Confirmation
+              Seats
             </label>
+            <fieldset className="flex flex-wrap gap-2">
+              <div>
+                <input
+                  type="radio"
+                  name="Fueltype"
+                  value="Diesel"
+                  id="Diesel"
+                  onClick={(e) => setFueltype(e.target.value)}
+                  className="peer hidden"
+                />
 
-            <input
-              type="text"
-              id="Size"
-              name="Size"
-              className="mt-1 w-full rounded-md border-gray-200 bg-white text-sm text-gray-700 shadow-sm"
-            />
+                <label
+                  htmlFor="Diesel"
+                  className="flex cursor-pointer items-center justify-center rounded-md border border-gray-100 bg-white px-3 py-2 text-gray-900 hover:border-gray-200 peer-checked:border-blue-500 peer-checked:bg-blue-500 peer-checked:text-white"
+                >
+                  <p className="text-sm font-medium">Diesel</p>
+                </label>
+              </div>
+
+              <div>
+                <input
+                  type="radio"
+                  name="Fueltype"
+                  value="Petrol"
+                  id="Petrol"
+                  onClick={(e) => setFueltype(e.target.value)}
+                  className="peer hidden"
+                />
+
+                <label
+                  htmlFor="Petrol"
+                  className="flex cursor-pointer items-center justify-center rounded-md border border-gray-100 bg-white px-3 py-2 text-gray-900 hover:border-gray-200 peer-checked:border-blue-500 peer-checked:bg-blue-500 peer-checked:text-white"
+                >
+                  <p className="text-sm font-medium">Petrol</p>
+                </label>
+              </div>
+
+              <div>
+                <input
+                  type="radio"
+                  name="Fueltype"
+                  value="Electric"
+                  id="Electric"
+                  onClick={(e) => setFueltype(e.target.value)}
+                  className="peer hidden"
+                />
+
+                <label
+                  htmlFor="Electric"
+                  className="flex cursor-pointer items-center justify-center rounded-md border border-gray-100 bg-white px-3 py-2 text-gray-900 hover:border-gray-200 peer-checked:border-blue-500 peer-checked:bg-blue-500 peer-checked:text-white"
+                >
+                  <p className="text-sm font-medium">Electric</p>
+                </label>
+              </div>
+
+              <div>
+                <input
+                  type="radio"
+                  name="Fueltype"
+                  value="hybrid"
+                  id="hybrid"
+                  onClick={(e) => setFueltype(e.target.value)}
+                  className="peer hidden"
+                />
+
+                <label
+                  htmlFor="hybrid"
+                  className="flex cursor-pointer items-center justify-center rounded-md border border-gray-100 bg-white px-3 py-2 text-gray-900 hover:border-gray-200 peer-checked:border-blue-500 peer-checked:bg-blue-500 peer-checked:text-white"
+                >
+                  <p className="text-sm font-medium">hybrid</p>
+                </label>
+              </div>
+            </fieldset>
           </div>
 
-          <MapPicker
+          {/* <MapPicker
             defaultLocation={defaultLocation}
             zoom={zoom}
             mapTypeId="roadmap"
@@ -272,11 +356,14 @@ const Addcars = forwardRef((props, ref) => {
             onChangeLocation={handleChangeLocation}
             onChangeZoom={handleChangeZoom}
             apiKey="AIzaSyD7y48-Ir_HKE43kMn_5DGf28FpJ8vRf-s"
-          />
+          /> */}
 
           <div className="col-span-6 sm:flex sm:items-center sm:gap-4">
-            <button className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500">
-              Create an account
+            <button
+              type="sumbit"
+              className="inline-block shrink-0 rounded-md border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white transition hover:bg-transparent hover:text-blue-600 focus:outline-none focus:ring active:text-blue-500"
+            >
+              Upload
             </button>
           </div>
         </form>
